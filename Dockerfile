@@ -1,4 +1,4 @@
-# Use official PHP image with Apache
+# Base image
 FROM php:8.2-apache
 
 # Install system dependencies
@@ -12,7 +12,7 @@ RUN a2enmod rewrite
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy Laravel project files
+# Copy Laravel app files
 COPY . .
 
 # Install Composer
@@ -24,6 +24,9 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 # Set correct permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage
+
+# Change Apache document root to Laravel's public folder
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
 
 # Expose port 80
 EXPOSE 80
