@@ -1,7 +1,10 @@
 services:
   - type: web
-    name: vtube
+    name: vtube-laravel
     env: docker
-    plan: free
     branch: master
     dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      groups:
+        - name: vtube
