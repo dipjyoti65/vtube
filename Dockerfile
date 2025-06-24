@@ -9,28 +9,33 @@ RUN apt-get update && apt-get install -y \
 # Enable Apache rewrite
 RUN a2enmod rewrite
 
-# Workdir
+# Set working directory
 WORKDIR /var/www/html
 
-# Copy project
+# Copy Laravel app files
 COPY . .
 
-# Composer
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Permissions
+# Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
  && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# ✅ Create SQLite DB file
-RUN touch /var/www/html/database/database.sqlite
-
-# Point Apache to /public
+# Set Apache document root to /public
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
 
-# Port
+# ✅ Copy startup script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
+# Expose port 80
 EXPOSE 80
+
+# Run migrations and start Apache at runtime
+CMD ["/start.sh"]
+
 
 
 
