@@ -11,25 +11,19 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('videos', function (Blueprint $table) {
-            $table->unsignedBigInteger('video_id')->autoIncrement()->primary();
+            $table->id('video_id'); // ✅ this line alone is enough
             $table->string('title');
             $table->text('description')->nullable();
-
-            // URL or storage path of the video file
-            $table->string('video_path');  // Example: 'videos/user123/video1.mp4'
-
-            // Optional: thumbnail for video
+            $table->string('video_path');
             $table->string('thumbnail_path')->nullable();
-
-            // Optional: duration, size, etc.
-            $table->integer('duration')->nullable(); // duration in seconds
-            $table->bigInteger('size')->nullable();  // size in bytes
-
+            $table->integer('duration')->nullable();
+            $table->bigInteger('size')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
+
 
     }
 
