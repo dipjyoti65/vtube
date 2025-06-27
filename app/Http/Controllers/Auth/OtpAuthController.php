@@ -31,7 +31,8 @@ class OtpAuthController extends Controller
     {
         $request->validate(['phone' => 'required|string|regex:/^\+?[1-9]\d{1,14}$/']);
 
-        $otp = rand(100000, 999999);
+        // $otp = rand(100000, 999999);
+        $otp = 123456;
 
         Otp::Create(
             [
