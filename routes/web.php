@@ -7,5 +7,3 @@ Route::get('/', function () {
     // return view('welcome');
      return 'Laravel is working!';
 });
-
-Route::get('/get-all-videos', [VideoController::class, 'getAllVideos']);
