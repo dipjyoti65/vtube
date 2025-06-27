@@ -98,7 +98,7 @@ class VideoController extends Controller
     }
 
 
-    public function getAllVidoes(Request $request){
+    public function getAllVideos(Request $request){
         try{
             //Get limit and offset from request
             $limit = $request->query('limit', 10);

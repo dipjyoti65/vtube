@@ -28,4 +28,11 @@ Route::middleware('auth:api')->group(function () {
 
     Route::post('/merge-chunks', [VideoController::class, 'mergeChunks']);
 
+    Route::get('/get-user-videos', [VideoController::class, 'getUserVideos']);
+
+  
+
 });
+
+// route without auth
+Route::get('/get-all-videos', [VideoController::class, 'getAllVideos']);
